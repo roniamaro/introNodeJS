@@ -24,3 +24,15 @@ Começando com o Node.JS
 
 # Node DOC
 https://nodejs.org/docs/latest/api/http.html
+
+# Instalação
+  npm install express
+	npm install nodemon
+
+# Notes
+  server.js -> executa/roda o servidor http que criamos no projeto
+  app.js -> executa/roda o servidor express que criamos no projeto
+
+  # extensões do VS Code
+    rest client -> susbstitui a necessidade de rodarmos via Postman os envios de requisições
+    
