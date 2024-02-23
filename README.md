@@ -21,3 +21,6 @@ Começando com o Node.JS
       Aplicação um pouco mais robusta.
       Microserviços
       Mensageria
+
+# Node DOC
+https://nodejs.org/docs/latest/api/http.html
