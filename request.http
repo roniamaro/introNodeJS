@@ -1,0 +1,32 @@
+//Cadastro de produto
+POST http://localhost:4002/products
+content-type: application/json
+
+{
+  "name": "Caneta",
+  "price": 3
+}
+
+###
+//Listar os produtos
+GET http://localhost:4002/products
+
+###
+//Listar produto by ID
+GET http://localhost:4002/products/"id"
+
+###
+//Alterar produto by ID 
+PUT http://localhost:4002/products/"id"
+content-type: application/json
+
+{
+  "name": "Caneta",
+  "price": 3
+}
+
+###
+//Deletar produto by ID
+DELETE http://localhost:4002/products/"id"
+
+###

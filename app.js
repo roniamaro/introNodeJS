@@ -1,7 +1,7 @@
 const express = require("express");
-const { randomUUID } = require("crypto"); //cria um ID Universal
-
 const app = express();
+
+//const { randomUUID } = require("crypto"); //cria um ID Universal
 
 app.use(express.json());
 
@@ -21,18 +21,19 @@ const products = [];
 */
 
 //Rota de teste
+/**
 app.get("/", (request, response) => {
   return response.json({
     message: "Acessou a primeira rota com nodemon",
   });
 });
+*/
 
 //Cadastro de produto
-app.get("/products", (request, response) => {
+app.post("/products", (request, response) => {
   const { name, price } = request.body;
-  const body = request.body;
-  console.log(body);
-  /**const product = {
+  
+  const product = {
     id: randomUUID(),
     name,
     price
@@ -41,12 +42,46 @@ app.get("/products", (request, response) => {
   products.push(product);
 
   return response.json(product);
-  */
+  console.log(body);
 });
 
 //Listar os produtos
 app.get("/products", (request, response) => {
   return response.json(products);
 });
+
+//Listar produto by ID
+app.get("/products/:id", (request, response) => {
+  const { id } = request.params;
+  const product = products.find(product => product.id === id);
+  return response.json(products);
+});
+
+//Alterar produto by ID
+app.put("products/:id", (request, response) => {
+  const { id } = request.params;
+  const { name, price } = request.body;
+  const productIndex = products.findIndex(product => product.id ===id);
+
+  //put
+  products[productIndex] = {
+    ...products[productIndex],
+    name,
+    price
+  }
+  
+  return response.json({ message: "Produto alterado com sucesso"});
+})
+
+//Deletar produto by ID
+app.delete("products/:id", (request, response) => {
+  const { id } = request.params;
+  const productIndex = products.findIndex(product => product.id ===id);
+  
+  //delete
+  products.splice(productIndex, 1);
+
+  return response.json({message: "Produto removido com sucesso"});
+})
 
 app.listen(4002, () => console.log("Servidor está rodando na porta 4002"));
