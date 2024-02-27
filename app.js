@@ -1,11 +1,20 @@
+const { error } = require("console");
 const express = require("express");
 const app = express();
+const fs= require("fs")
 
 //const { randomUUID } = require("crypto"); //cria um ID Universal
 
 app.use(express.json());
 
-const products = [];
+let products = [];
+fs.readFile("products.json", "utf-8", (err, data) => {
+  if(err) {
+    console.log(err);
+  } else {
+    products = JSON.parse(data);
+  }
+});
 
 /**
  * para startar o servidor -> no terminal "npm run dev" lembrando que foi criado o script para "dev" no arquivo package.json
@@ -41,8 +50,9 @@ app.post("/products", (request, response) => {
 
   products.push(product);
 
+  productFile();
+
   return response.json(product);
-  console.log(body);
 });
 
 //Listar os produtos
@@ -69,6 +79,8 @@ app.put("products/:id", (request, response) => {
     name,
     price
   }
+
+  productFile();
   
   return response.json({ message: "Produto alterado com sucesso"});
 })
@@ -81,7 +93,20 @@ app.delete("products/:id", (request, response) => {
   //delete
   products.splice(productIndex, 1);
 
+  productFile();
+
   return response.json({message: "Produto removido com sucesso"});
 })
+
+//Função criar produto "file"
+function productFile() {
+  fs.writeFile("products.json", JSON.stringify(products), (err) => {
+    if (err) {
+      console.log(err)      
+    } else {
+      console.log("Produto inserido no arquivo externo");
+    }
+  });  
+}
 
 app.listen(4002, () => console.log("Servidor está rodando na porta 4002"));
